@@ -63,14 +63,15 @@ class CravcencoProducer implements Callable<String> {
     public String call() {
         String[] words = {"aboba", "programare", "java", "battlefield", "playstation"};
         try {
-
-        for (int i = 0; i < 2; i++) {
             sem.acquire();
+        for (int i = 0; i < 2; i++) {
+
             String a = words[(int) (Math.random() * words.length)];
             String b = words[(int) (Math.random() * words.length)];
             s.put(Thread.currentThread().getName(), a, b);
-            sem.release();
+
         }
+            sem.release();
         }catch (InterruptedException e){}
         return "";
     }
@@ -87,11 +88,13 @@ class CravcencoConsumer implements Callable<String> {
     public String call() {
         int cons = 0;
         try {
+            sem.acquire();
             for (int i = 0; i < 3; i++) {
-                sem.acquire();
+
                 s.get(Thread.currentThread().getName());
-                sem.release();
+
             }
+            sem.release();
         } catch (InterruptedException e){}
         return Thread.currentThread().getName() + " Поток завершен";
     }

@@ -11,7 +11,7 @@ public class Main {
         switch (choice) {
             case 1:
                 Store store = new Store();
-                Semaphore semaphore = new Semaphore(5);
+                Semaphore semaphore = new Semaphore(2);
                 ExecutorService producerExecutor = Executors.newFixedThreadPool(3);
                 ExecutorService consumerExecutor = Executors.newFixedThreadPool(4);
 
@@ -28,15 +28,15 @@ public class Main {
                 break;
                 case 2:
                     CravcencoStore s = new CravcencoStore();
-                    Semaphore sem=new Semaphore(1);
+                    Semaphore sem=new Semaphore(2);
                     ExecutorService cproducerExecutor = Executors.newFixedThreadPool(4 );
                     ExecutorService cconsumerExecutor = Executors.newFixedThreadPool(3);
                     cproducerExecutor.submit(new CravcencoProducer(s,sem));
-                    cproducerExecutor.submit(new CravcencoProducer(s,sem));
-                    cproducerExecutor.submit(new CravcencoProducer(s,sem));
-                    cproducerExecutor.submit(new CravcencoProducer(s,sem));
                     Future<String> cc1 = cconsumerExecutor.submit(new CravcencoConsumer(s,sem));
+                    cproducerExecutor.submit(new CravcencoProducer(s,sem));
                     Future<String> cc2 = cconsumerExecutor.submit(new CravcencoConsumer(s,sem));
+                    cproducerExecutor.submit(new CravcencoProducer(s,sem));
+                    cproducerExecutor.submit(new CravcencoProducer(s,sem));
                     Future<String> cc3 = cconsumerExecutor.submit(new CravcencoConsumer(s,sem));
 
                     cconsumerExecutor.shutdown();
